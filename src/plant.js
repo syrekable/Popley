@@ -6,7 +6,10 @@ export default class Plant extends Component {
     //and a button, showing either the time to next watering
     //or alerting the user to water the plant
 
-    //I have absolutely no idea what is going on there
+    //I have absolutely no idea what is going on here, 
+    //but got it roughly from there
+    //reread: https://reactjs.org/docs/lifting-state-up.html
+    //rewatch: https://www.youtube.com/watch?v=5Xew--ycx0o
     constructor(props){
         super(props);
         this.handleClick = this.handleClick.bind(this);
