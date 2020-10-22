@@ -1,53 +1,57 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { 
   StyleSheet,
   View,
   ScrollView,
   TouchableOpacity,
-  Text
+  Text,
+  Alert,
 } from 'react-native';
-import Flower from './src/flower';
+import  Plant  from './src/plant';
+import  MockPlants from './src/utils'
 
-Array.prototype.pickRandom = function(){
-  return this[Math.floor(Math.random()*this.length)];
-}
-
-class MockFlowers{
-  static randomTime(){  
-    let interval = this.intervals.pickRandom();
-    return interval * Math.floor(100*Math.random())
+export default class App extends Component { 
+  constructor(props){
+    super(props);
+    this.plants = this.makeMockupPlants(10, []);
   }
-  static getFlower(){
-    return {
-      name: this.names.pickRandom(),
-      time: this.randomTime()
+
+  makeMockupPlants(n, array){
+    for(let i = 0; i < n; i++){
+      let data = MockPlants.getPlant();
+      array.push(<Plant handler={ this.handleClick } name={ data.name } timeToWater={data.time}/>);
     }
+    return array;
   }
-}
+  
+  handleClick(name) { Alert.alert(
+    name,
+    "PODLEJ MNIE!!1!",
+    [
+      {
+        text: "Podlano!"
+      }
+    ]
+  )
+  } 
 
-MockFlowers.intervals = [0, 15, 30, 45, 60, 120, 300, 600, 3600];
-MockFlowers.names = ["mandragora", "kuktas", "cukinia", "magnolia", "konopia", "orichidea", "burak"];
-
-const App = () => { 
-  let flowers = [];
-  for(let i = 0; i < 10; i++){
-    let data = MockFlowers.getFlower();
-    flowers.push(<Flower name={data.name} timeToWater={data.time}/>);
-  }
-  return (
-    <View style={styles.container} >
-      <View style={styles.flowerList}>
-        <ScrollView>
-          { flowers }
-        </ScrollView>
+  render(){
+    return (
+      <View style={styles.container} >
+        <View style={styles.PlantList}>
+          <ScrollView>
+            { this.plants }
+          </ScrollView>
+        </View>
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => Alert.alert("Alert", "Jeszcze nie okodowano /:")}
+          >
+          <Text style={styles.buttonText}>Dodaj roślinkę</Text>
+        </TouchableOpacity>
       </View>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => (2+2)}>
-        <Text style={styles.buttonText}>Dodaj roślinkę</Text>
-      </TouchableOpacity>
-    </View>
-  );
+    );  
+  }
 }
 
 const styles = StyleSheet.create({
@@ -55,7 +59,7 @@ const styles = StyleSheet.create({
     flex: 1,
     color: '#979f8e'
   },
-  flowerList: { 
+  PlantList: { 
     flex: 8, 
     backgroundColor: '#eeeae1', 
     paddingHorizontal: 20,
@@ -79,5 +83,3 @@ const styles = StyleSheet.create({
     color: 'black',
   }
 });
-
-export default App;
