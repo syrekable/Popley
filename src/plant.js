@@ -5,6 +5,17 @@ export default class Plant extends Component {
     //a component consisting of an captioned image of a plant with a tint
     //and a button, showing either the time to next watering
     //or alerting the user to water the plant
+
+    //I have absolutely no idea what is going on there
+    constructor(props){
+        super(props);
+        this.handleClick = this.handleClick.bind(this);
+    }
+
+    handleClick(name){
+        this.props.handler(name);
+    }
+
     render(){
         const color = this.props.timeToWater > 0 ? colors.tintNormal : colors.tintAlert;
         return (
@@ -16,30 +27,29 @@ export default class Plant extends Component {
                     <Tint color={color} name={this.props.name}/>
                 </ImageBackground>
                 <View>
-                    <PlantInfoButton 
-                        timeToWater={this.props.timeToWater} 
-                        onPress={() => this.props.handler(this.props.name)}/>
+                    <TouchableOpacity
+                        onPress={ () => this.handleClick(this.props.name) }
+                        disabled={this.props.timeToWater > 0}//disable if there's no need to water
+                        style={styles.appButtonContainer}
+                        activeOpacity={0.2}
+                    >
+                        <Text style={styles.appButtonText}>{this.props.timeToWater > 0 ? `Podlej mnie za ${Math.round(this.props.timeToWater / 60)} minut` : "Podlej mnie!"}</Text>
+                    </TouchableOpacity>
                 </View>
             </View>
         );
     }
 }
 
+/*
 class PlantInfoButton extends Component {
     render(){
         return(
-            <TouchableOpacity
-                onPress={this.props.onPress}
-                disabled={this.props.timeToWater > 0}
-                style={styles.appButtonContainer}
-                onPress={this.props.ImageonPress}
-                activeOpacity={0.2}
-            >
-            <Text style={styles.appButtonText}>{this.props.timeToWater > 0 ? `Podlej mnie za ${Math.round(this.props.timeToWater / 60)} minut` : "Podlej mnie!"}</Text>
-            </TouchableOpacity>
+            
         )
     }
 }
+*/
 
 class Tint extends Component {
     //a semi-transparent element with a specific colour, displaying plant's name

@@ -17,4 +17,4 @@ Array.prototype.pickRandom = function(){
   }
 
 MockPlants.intervals = [0, 15, 30, 45, 60, 120, 300, 600, 3600];
-MockPlants.names = ["mandragora", "kuktas", "cukinia", "magnolia", "konopia", "orichidea", "burak"];
+MockPlants.names = ["mandragora", "kuktas", "cukinia", "magnolia", "konopia", "orichidea", "burak", "trzcina cukrowa"];

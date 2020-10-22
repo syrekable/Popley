@@ -14,25 +14,26 @@ export default class App extends Component {
   constructor(props){
     super(props);
     this.plants = this.makeMockupPlants(10, []);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   makeMockupPlants(n, array){
     for(let i = 0; i < n; i++){
       let data = MockPlants.getPlant();
-      array.push(<Plant handler={ this.handleClick } name={ data.name } timeToWater={data.time}/>);
+      array.push(<Plant key={i} handler={ this.handleClick } name={ data.name } timeToWater={data.time}/>);
     }
     return array;
   }
   
-  handleClick(name) { Alert.alert(
-    name,
-    "PODLEJ MNIE!!1!",
-    [
-      {
-        text: "Podlano!"
-      }
-    ]
-  )
+  handleClick(name) { 
+    Alert.alert(
+      name,
+      "PODLEJ MNIE!!1!",
+      [
+        {
+          text: "Podlano!"
+        }
+      ]);
   } 
 
   render(){
