@@ -44,7 +44,7 @@ const App = () => {
       <TouchableOpacity
         style={styles.button}
         onPress={() => (2+2)}>
-        <Text style={styles.buttonText}>Kliknij mie</Text>
+        <Text style={styles.buttonText}>Dodaj roślinkę</Text>
       </TouchableOpacity>
     </View>
   );
@@ -78,6 +78,5 @@ const styles = StyleSheet.create({
     color: 'black',
   }
 });
-
 
 export default App;
