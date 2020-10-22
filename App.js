@@ -58,7 +58,8 @@ const styles = StyleSheet.create({
   flowerList: { 
     flex: 8, 
     backgroundColor: '#eeeae1', 
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    marginTop: 30
   },
   bottom: {
     flex: 1, 
