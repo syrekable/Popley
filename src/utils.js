@@ -8,7 +8,7 @@ Array.prototype.pickRandom = function(){
       let interval = this.intervals.pickRandom();
       return interval * Math.floor(100*Math.random())
     }
-    static getPlant(){
+    static getPlantData(){
       return {
         name: this.names.pickRandom(),
         time: this.randomTime()

@@ -1,3 +1,4 @@
+import 'react-native-gesture-handler';
 import React, { Component } from 'react';
 import {
   StyleSheet,
@@ -7,10 +8,15 @@ import {
   Text,
   Alert,
 } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 import Plant from './src/plant';
 import MockPlants from './src/utils'
 
-export default class App extends Component {
+const Stack = createStackNavigator();
+
+class MainScreen extends Component {
+
   constructor(props) {
     super(props);
     this.plants = this.makeMockupPlants(10, []);
@@ -19,7 +25,7 @@ export default class App extends Component {
 
   makeMockupPlants(n, array) {
     for (let i = 0; i < n; i++) {
-      let data = MockPlants.getPlant();
+      let data = MockPlants.getPlantData();
       array.push(<Plant key={i} handler={this.handleClick} name={data.name} timeToWater={data.time} />);
     }
     return array;
@@ -46,12 +52,30 @@ export default class App extends Component {
         </View>
         <TouchableOpacity
           style={styles.appButtonContainer}
-          onPress={() => Alert.alert("Alert", "Jeszcze nie okodowano /:")}
-        >
+          onPress={() => this.props.navigation.navigate('NewPlant')}>
           <Text style={styles.appButtonText}>Dodaj roślinkę</Text>
         </TouchableOpacity>
       </View>
     );
+  }
+}
+
+class AddPlantScreen extends Component {
+  render() {
+    return <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}><Text>No chej</Text></View>
+  }
+}
+
+export default class App extends Component {
+  render() {
+    return (
+      <NavigationContainer initialRouteName="HomeScreen">
+        <Stack.Navigator>
+          <Stack.Screen name="HomeScreen" component={MainScreen} options={{ title: "Twoje roślinki" }} />
+          <Stack.Screen name="NewPlant" component={AddPlantScreen} options={{ title: "Dodaj roślinkę" }} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    )
   }
 }
 
@@ -64,7 +88,7 @@ const styles = StyleSheet.create({
     flex: 8,
     backgroundColor: '#eeeae1',
     paddingHorizontal: 20,
-    marginTop: 30
+    marginTop: 10
   },
   bottom: {
     flex: 1,
