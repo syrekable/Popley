@@ -28,10 +28,10 @@ class MainScreen extends Component {
   makeMockupPlantsData(n, array) {
     for (let i = 0; i < n; i++) {
       let data = Utils.MockPlants.getPlantData();
-      array.push({ name: data.name, timeToWater: data.time});
+      array.push({ name: data.name, timeToWater: data.time });
     }
-    console.log(`typeof([]) is ${typeof(new Array())}`)
-    console.log(`making mock of type ${typeof(array)}`)
+    console.log(`typeof([]) is ${typeof (new Array())}`)
+    console.log(`making mock of type ${typeof (array)}`)
     return array;
   }
 
@@ -49,9 +49,9 @@ class MainScreen extends Component {
   makePlant(name, wateringInterval, image) {
     console.log(`image.uri: ${image}`);
     this.setState({
-      plants: [...this.state.plants, {name: name, timeToWater: Utils.timeToSeconds(wateringInterval), image: image}],
+      plants: [...this.state.plants, { name: name, timeToWater: Utils.timeToSeconds(wateringInterval), image: image }],
     })
-    console.log(`this.state.plants: ${JSON.stringify(this.state.plants)}\ntypeof(this.state.plants): ${typeof(this.state.plants)}`)
+    console.log(`this.state.plants: ${JSON.stringify(this.state.plants)}\ntypeof(this.state.plants): ${typeof (this.state.plants)}`)
   }
 
 

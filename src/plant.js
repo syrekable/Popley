@@ -23,7 +23,7 @@ export default class plant extends Component {
         return (
             <View style={styles.container}>
                 <ImageBackground
-                    source={{uri: this.props.image}}
+                    source={{ uri: this.props.image }}
                     style={styles.plantImg}
                 >
                     <Tint color={color} name={this.props.name} />

@@ -117,7 +117,7 @@ export default class AddPlantScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <TouchableOpacity
-                //onPress -> trigger MainScreen.makePlant method with given parameters, then go back to main window
+                    //onPress -> trigger MainScreen.makePlant method with given parameters, then go back to main window
                     style={styles.appButtonContainer}
                     onPress={() => (
                         this.handleClick(
