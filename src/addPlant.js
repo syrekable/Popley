@@ -38,7 +38,7 @@ export default class AddPlantScreen extends Component {
                     <Text style={styles.label}>Nazwa:</Text>
                     <TextInput
                         style={[styles.textInput, { height: 50 }]}
-                        onChangeText={newText => this.setState({ text: newText })}
+                        onChangeText={newText => this.setState({ text: newText.trim() })}
                         onFocus={() => this.clearText()}
                         value={this.state.text} />
                     <Text style={styles.label}>Częstotliwość podlewania:</Text>
