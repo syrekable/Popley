@@ -7,11 +7,10 @@ import {
   TouchableOpacity,
   Text,
   Alert,
-  TextInput
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import { Picker } from '@react-native-community/picker';
+import AddPlantScreen from './src/addPlant'
 import Plant from './src/plant';
 import MockPlants from './src/utils'
 
@@ -60,57 +59,6 @@ class MainScreen extends Component {
         </TouchableOpacity>
       </View>
     );
-  }
-}
-
-class AddPlantScreen extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      text: "nowa roślinka",
-      quantity: 1,
-      interval: "days",
-    }
-  }
-
-  //something is not yes with onFocus, it seems
-  clearText() {
-    this.setState({ text: "XDDD" })
-  }
-
-  render() {
-    return (
-      <View style={styles.container}>
-        <View style={styles.plantList}>
-          <Text style={styles.label}>Nazwa:</Text>
-          <TextInput
-            style={{ height: 50, borderColor: "grey", borderWidth: 2 }}
-            onChangeText={newText => this.setState({ text: newText })}
-            onFocus={() => this.clearText()}
-            value={this.state.value} />
-          <Text style={styles.label}>Częstotliwość podlewania:</Text>
-          <View style={{height: 50, flexDirection: "row"}}>
-            <TextInput
-              style={{ flex: 1, borderColor: "grey", borderWidth: 2 }}
-            />
-            <Picker
-              selectedValue={this.state.interval}
-              style={{ flex: 1}}
-              onValueChange={itemValue =>
-                this.setState({ interval: itemValue })
-              }>
-              <Picker.Item label="dnie" value="days" />
-              <Picker.Item label="tygodnie" value="weeks" />
-            </Picker>
-          </View>
-        </View>
-        <TouchableOpacity
-          style={styles.appButtonContainer}
-          onPress={() => this.props.navigation.goBack()}>
-          <Text style={styles.appButtonText}>Dodaj</Text>
-        </TouchableOpacity>
-      </View>
-    )
   }
 }
 
