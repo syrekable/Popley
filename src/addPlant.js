@@ -18,9 +18,16 @@ export default class AddPlantScreen extends Component {
         }
     }
 
-    //something is not yes with onFocus, it seems
     clearText() {
-        this.setState({ text: "XDDD" })
+        this.setState({ text: "" })
+    }
+
+    onChanged(text) {
+        //numeric input sanitizer, source:
+        //https://stackoverflow.com/a/47751269/12938809
+        this.setState({
+            quantity: text.replace(/[^0-9]/g, ''),
+        });
     }
 
     //TODO: refactor him some more
@@ -30,15 +37,17 @@ export default class AddPlantScreen extends Component {
                 <View style={styles.plantList}>
                     <Text style={styles.label}>Nazwa:</Text>
                     <TextInput
-                        style={[styles.textInput, {height: 50}]}
+                        style={[styles.textInput, { height: 50 }]}
                         onChangeText={newText => this.setState({ text: newText })}
                         onFocus={() => this.clearText()}
-                        value={this.state.value} />
+                        value={this.state.text} />
                     <Text style={styles.label}>Częstotliwość podlewania:</Text>
                     <View style={{ height: 50, flexDirection: "row" }}>
                         <TextInput
-                            style={[styles.textInput, {flex: 1}]}
+                            style={[styles.textInput, { flex: 1 }]}
                             keyboardType="numeric"
+                            onChangeText={quantity => this.onChanged(quantity)}
+                            value={this.state.quantity.toString()}
                         />
                         <Picker
                             selectedValue={this.state.interval}
@@ -55,7 +64,7 @@ export default class AddPlantScreen extends Component {
                 <TouchableOpacity
                     style={styles.appButtonContainer}
                     onPress={() => this.props.navigation.goBack()}>
-                    <Text style={styles.appButtonText}>Dodaj</Text>
+                    <Text style={styles.appButtonText}>Dodaj mnie!</Text>
                 </TouchableOpacity>
             </View>
         )
