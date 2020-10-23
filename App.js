@@ -7,12 +7,14 @@ import {
   TouchableOpacity,
   Text,
   Alert,
+  TextInput
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { Picker } from '@react-native-community/picker';
 import Plant from './src/plant';
 import MockPlants from './src/utils'
-import { TextInput } from 'react-native-gesture-handler';
+
 
 const Stack = createStackNavigator();
 
@@ -65,10 +67,13 @@ class AddPlantScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: "nowa roślinka"
+      text: "nowa roślinka",
+      quantity: 1,
+      interval: "days",
     }
   }
 
+  //something is not yes with onFocus, it seems
   clearText() {
     this.setState({ text: "XDDD" })
   }
@@ -79,10 +84,25 @@ class AddPlantScreen extends Component {
         <View style={styles.plantList}>
           <Text style={styles.label}>Nazwa:</Text>
           <TextInput
-            style={{ height: 40, borderColor: "grey", borderWidth: 2 }}
+            style={{ height: 50, borderColor: "grey", borderWidth: 2 }}
             onChangeText={newText => this.setState({ text: newText })}
             onFocus={() => this.clearText()}
             value={this.state.value} />
+          <Text style={styles.label}>Częstotliwość podlewania:</Text>
+          <View style={{height: 50, flexDirection: "row"}}>
+            <TextInput
+              style={{ flex: 1, borderColor: "grey", borderWidth: 2 }}
+            />
+            <Picker
+              selectedValue={this.state.interval}
+              style={{ flex: 1}}
+              onValueChange={itemValue =>
+                this.setState({ interval: itemValue })
+              }>
+              <Picker.Item label="dnie" value="days" />
+              <Picker.Item label="tygodnie" value="weeks" />
+            </Picker>
+          </View>
         </View>
         <TouchableOpacity
           style={styles.appButtonContainer}
@@ -120,7 +140,7 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10, 
+    margin: 10,
   },
   appButtonContainer: {
     elevation: 8,
