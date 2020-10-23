@@ -23,7 +23,7 @@ export default class plant extends Component {
         return (
             <View style={styles.container}>
                 <ImageBackground
-                    source={require("../assets/mandragora.jpg")}
+                    source={{uri: this.props.image}}
                     style={styles.plantImg}
                 >
                     <Tint color={color} name={this.props.name} />

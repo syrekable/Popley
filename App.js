@@ -47,10 +47,11 @@ class MainScreen extends Component {
   }
 
   makePlant(name, wateringInterval, image) {
+    console.log(`image.uri: ${image}`);
     this.setState({
-      plants: [...this.state.plants, {name: name, timeToWater: Utils.timeToSeconds(wateringInterval)}],
+      plants: [...this.state.plants, {name: name, timeToWater: Utils.timeToSeconds(wateringInterval), image: image}],
     })
-    console.log(`this.state: ${JSON.stringify(this.state)}\ntypeof(this.state.plants): ${typeof(this.state.plants)}`)
+    console.log(`this.state.plants: ${JSON.stringify(this.state.plants)}\ntypeof(this.state.plants): ${typeof(this.state.plants)}`)
   }
 
 
@@ -63,6 +64,7 @@ class MainScreen extends Component {
               <Plant key={`${data.name}_${data.timeToWater}`}
                 name={data.name}
                 timeToWater={data.timeToWater}
+                image={data.image}
                 handler={() => this.handleClick(data.name)}
               />))}
           </ScrollView>

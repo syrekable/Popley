@@ -104,9 +104,9 @@ export default class AddPlantScreen extends Component {
                             onValueChange={itemValue =>
                                 this.setState({ interval: itemValue })
                             }>
-                            <Picker.Item label="dnie" value="day" />
-                            <Picker.Item label="tygodnie" value="week" />
-                            <Picker.Item label="miesiące" value="month" />
+                            <Picker.Item label="dni" value="day" />
+                            <Picker.Item label="tygodni" value="week" />
+                            <Picker.Item label="miesięcy" value="month" />
                         </Picker>
                     </View>
                     {this.state.image && <Image source={{ uri: this.state.image }} style={[styles.imageBorder, { marginTop: 20, width: 320, height: 200 }]} />}
