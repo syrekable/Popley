@@ -20,6 +20,12 @@ export default class AddPlantScreen extends Component {
             interval: "days",
             image: null,
         }
+        this.imageOptions = {
+            mediaTypes: ImagePicker.MediaTypeOptions.Images,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
+        }
     }
 
     clearText() {
@@ -34,26 +40,12 @@ export default class AddPlantScreen extends Component {
         });
     }
 
-    useEffect() {
-        (async () => {
-            if (Platform.OS !== 'web') {
-                const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
-                if (status !== 'granted') {
-                    Alert.alert('Brak dostępu', 'Wybacz, ale bez Twojej zgody nie możemy wybrać zdjęcia Twojej roślinki 😉');
-                }
-            }
-        })();
-    };
-
+    //two basically the same methods:
+    //one lets you choose image, the other make one 
     pickImage = async () => {
         //set the 'image' state variable to whatever 
         //the user chooses, if he chooses, whenever he chooses
-        let result = await ImagePicker.launchImageLibraryAsync({
-            mediaTypes: ImagePicker.MediaTypeOptions.All,
-            allowsEditing: true,
-            aspect: [4, 3],
-            quality: 1,
-        });
+        let result = await ImagePicker.launchImageLibraryAsync(this.imageOptions);
 
         console.log(result);
 
@@ -62,8 +54,27 @@ export default class AddPlantScreen extends Component {
         }
     };
 
+    makePhoto = async () => {
+        let result = await ImagePicker.launchCameraAsync(this.imageOptions);
+
+        console.log(result);
+
+        if (!result.cancelled) {
+            this.setState({ image: result.uri });
+        }
+    }
 
     //TODO: refactor him some more
+    /*
+        RENDER:
+            'NAME' LABEL
+            NAME TEXT INPUT
+            'WATERING FREQUENCY' LABEL
+            WATERING FREQUENCY AND INTERVAL PICKER
+            PLANT'S PHOTO
+            'MAKE PHOTO' BUTTON
+            'ADD PLAND' BUTTON
+    */
     render() {
         return (
             <View style={styles.container}>
@@ -93,10 +104,10 @@ export default class AddPlantScreen extends Component {
                             <Picker.Item label="miesiące" value="months" />
                         </Picker>
                     </View>
-                    {this.state.image && <Image source={{uri: this.state.image}} style={{ width: 320, height: 200}}/>}
+                    {this.state.image && <Image source={{ uri: this.state.image }} style={[styles.imageBorder, { marginTop: 20, width: 320, height: 200 }]} />}
                     <TouchableOpacity
-                        style={[styles.appButtonContainer, , { marginTop: 30 }]}
-                        onPress={this.pickImage}>
+                        style={[styles.appButtonContainer, { marginTop: 20 }]}
+                        onPress={this.makePhoto}>
                         <Text style={styles.appButtonText}>Zrób mi zdjęcie!</Text>
                     </TouchableOpacity>
                 </View>
@@ -129,6 +140,10 @@ const styles = StyleSheet.create({
         fontSize: 20,
         fontWeight: 'bold',
         marginVertical: 10,
+    },
+    imageBorder: {
+        borderColor: "grey",
+        borderWidth: 5,
     },
     appButtonContainer: {
         elevation: 8,
