@@ -12,6 +12,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Plant from './src/plant';
 import MockPlants from './src/utils'
+import { TextInput } from 'react-native-gesture-handler';
 
 const Stack = createStackNavigator();
 
@@ -45,7 +46,7 @@ class MainScreen extends Component {
   render() {
     return (
       <View style={styles.container} >
-        <View style={styles.PlantList}>
+        <View style={styles.plantList}>
           <ScrollView>
             {this.plants}
           </ScrollView>
@@ -61,8 +62,35 @@ class MainScreen extends Component {
 }
 
 class AddPlantScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: "nowa roślinka"
+    }
+  }
+
+  clearText() {
+    this.setState({ text: "XDDD" })
+  }
+
   render() {
-    return <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}><Text>No chej</Text></View>
+    return (
+      <View style={styles.container}>
+        <View style={styles.plantList}>
+          <Text style={styles.label}>Nazwa:</Text>
+          <TextInput
+            style={{ height: 40, borderColor: "grey", borderWidth: 2 }}
+            onChangeText={newText => this.setState({ text: newText })}
+            onFocus={() => this.clearText()}
+            value={this.state.value} />
+        </View>
+        <TouchableOpacity
+          style={styles.appButtonContainer}
+          onPress={() => this.props.navigation.goBack()}>
+          <Text style={styles.appButtonText}>Dodaj</Text>
+        </TouchableOpacity>
+      </View>
+    )
   }
 }
 
@@ -82,18 +110,17 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    color: '#979f8e'
+    color: '#eeeae1'
   },
-  PlantList: {
+  plantList: {
     flex: 8,
-    backgroundColor: '#eeeae1',
     paddingHorizontal: 20,
     marginTop: 10
   },
-  bottom: {
-    flex: 1,
-    backgroundColor: '#c4bcb4',
-    justifyContent: 'center'
+  label: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10, 
   },
   appButtonContainer: {
     elevation: 8,
