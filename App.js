@@ -21,14 +21,14 @@ class MainScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      plants: this.makeMockupPlants(1, []),
+      plants: this.makeMockupPlantsData(10, []),
     }
   }
 
-  makeMockupPlants(n, array) {
+  makeMockupPlantsData(n, array) {
     for (let i = 0; i < n; i++) {
       let data = Utils.MockPlants.getPlantData();
-      array.push(<Plant key={i} handler={(name) => this.handleClick(name)} name={data.name} timeToWater={data.time} />);
+      array.push({ name: data.name, timeToWater: data.time});
     }
     return array;
   }
@@ -49,12 +49,12 @@ class MainScreen extends Component {
     console.log(oldPlants);
     this.setState({
       plants: oldPlants.push(
-        <Plant
-          handler={(name) => this.handleClick(name)}
-          name={name}
-          timeToWater={Utils.timeToSeconds(wateringInterval)}
-        />)
-      })
+        {
+          name: { name },
+          timeToWater: Utils.timeToSeconds(wateringInterval),
+        })
+    })
+    console.log(`this.state: ${JSON.stringify(this.state)}`)
   }
 
 
@@ -63,7 +63,12 @@ class MainScreen extends Component {
       <View style={styles.container} >
         <View style={styles.plantList}>
           <ScrollView>
-            {this.state.plants}
+            {this.state.plants.map(data => (
+              <Plant key={`${data.name}_${data.timeToWater}`}
+                name={data.name}
+                timeToWater={data.timeToWater}
+                handler={() => this.handleClick(data.name)}
+              />))}
           </ScrollView>
         </View>
         <TouchableOpacity

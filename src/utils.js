@@ -22,12 +22,6 @@ function timeToSeconds(wateringInterval){
     "week": 7*24*60*60,
     "month": 4*7*24*60*60,
   }; 
-  console.log(`wateringInterval:\t${JSON.stringify(wateringInterval)}\nwateringInterval.interval\t${wateringInterval.interval}\n`);
-  console.log(`exchangeRate:\t${JSON.stringify(exchangeRate)}
-  wateringInterval.interval==="day"\t${wateringInterval.interval==="day"}
-  typeof(wateringInterval.interval):\y${typeof(wateringInterval.interval)}
-  exchangeRate["day"]\t${exchangeRate["day"]}
-  exchangeRate[wateringInterval.interval]:\t${exchangeRate[wateringInterval.interval]}`)
   return wateringInterval.quantity * exchangeRate[wateringInterval.interval];
 }
 
