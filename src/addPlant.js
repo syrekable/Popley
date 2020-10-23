@@ -17,6 +17,14 @@ export default class AddPlantScreen extends Component {
             quantity: 1,
             interval: "days",
         }
+        this.options ={
+            title: 'Select Avatar',
+            customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+            storageOptions: {
+                skipBackup: true,
+                path: 'images',
+            },
+        }
     }
 
     clearText() {
@@ -30,15 +38,6 @@ export default class AddPlantScreen extends Component {
             quantity: text.replace(/[^0-9]/g, ''),
         });
     }
-
-    options = {
-        title: 'Select Avatar',
-        customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
-        storageOptions: {
-            skipBackup: true,
-            path: 'images',
-        },
-    };
 
     //TODO: refactor him some more
     render() {
@@ -69,9 +68,10 @@ export default class AddPlantScreen extends Component {
                             <Picker.Item label="tygodnie" value="weeks" />
                             <Picker.Item label="miesiące" value="months" />
                         </Picker>
-                        <TouchableOpacity
+                    </View>
+                    <TouchableOpacity
                             style={styles.appButtonContainer}
-                            onPress={() => ImagePicker.launchCamera(this.options, (response) => {
+                            onPress={() => {ImagePicker.launchCamera(this.options, (response) => {
                                 console.log('Response = ', response);
 
                                 if (response.didCancel) {
@@ -90,10 +90,9 @@ export default class AddPlantScreen extends Component {
                                         avatarSource: source,
                                     });
                                 }
-                            })}>
+                            })}}>
                             <Text style={styles.appButtonText}>Dodaj mnie!</Text>
                         </TouchableOpacity>
-                    </View>
                 </View>
                 <TouchableOpacity
                     style={styles.appButtonContainer}
