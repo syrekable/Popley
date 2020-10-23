@@ -10,16 +10,16 @@ export default class Plant extends Component {
     //but got it roughly from there
     //reread: https://reactjs.org/docs/lifting-state-up.html
     //rewatch: https://www.youtube.com/watch?v=5Xew--ycx0o
-    constructor(props){
+    constructor(props) {
         super(props);
         this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(name){
+    handleClick(name) {
         this.props.handler(name);
     }
 
-    render(){
+    render() {
         const color = this.props.timeToWater > 0 ? colors.tintNormal : colors.tintAlert;
         return (
             <View style={styles.container}>
@@ -27,13 +27,13 @@ export default class Plant extends Component {
                     source={require("../assets/mandragora.jpg")}
                     style={styles.PlantImg}
                 >
-                    <Tint color={color} name={this.props.name}/>
+                    <Tint color={color} name={this.props.name} />
                 </ImageBackground>
                 <View>
                     <TouchableOpacity
-                        onPress={ () => this.handleClick(this.props.name) }
+                        onPress={() => this.handleClick(this.props.name)}
                         disabled={this.props.timeToWater > 0}//disable if there's no need to water
-                        style={styles.appButtonContainer}
+                        style={this.props.timeToWater > 0 ? styles.appButtonContainer : [styles.appButtonContainer, styles.appButtonRed]}
                         activeOpacity={0.2}
                     >
                         <Text style={styles.appButtonText}>{this.props.timeToWater > 0 ? `Podlej mnie za ${Math.round(this.props.timeToWater / 60)} minut` : "Podlej mnie!"}</Text>
@@ -44,24 +44,14 @@ export default class Plant extends Component {
     }
 }
 
-/*
-class PlantInfoButton extends Component {
-    render(){
-        return(
-            
-        )
-    }
-}
-*/
-
 class Tint extends Component {
     //a semi-transparent element with a specific colour, displaying plant's name
-    render(){
+    render() {
         return (
             <ImageBackground
-            source={require("../assets/icon.png")}//any image will do, but icon is small -> light
-            style={[styles.PlantImg, styles.transparent]}
-            tintColor={this.props.color}
+                source={require("../assets/icon.png")}//any image will do, but icon is small -> light
+                style={[styles.PlantImg, styles.transparent]}
+                tintColor={this.props.color}
             >
                 <Text style={[styles.PlantName, styles.textShadow]}>{this.props.name}</Text>
             </ImageBackground>
@@ -80,7 +70,7 @@ const styles = StyleSheet.create({
         marginVertical: 10,
     },
     PlantName: {
-        flex:1,  //TODO: find a way to somehow constraint Plant's dimensions
+        flex: 1,  //TODO: find a way to somehow constraint Plant's dimensions
         color: 'white',
         textTransform: 'uppercase',
         textAlign: 'center',
@@ -96,7 +86,7 @@ const styles = StyleSheet.create({
     },
     textShadow: {
         textShadowColor: 'white',
-        textShadowOffset: {width: 1, height: 1},
+        textShadowOffset: { width: 1, height: 1 },
         textShadowRadius: 10
     },
     appButtonContainer: {
@@ -106,12 +96,15 @@ const styles = StyleSheet.create({
         borderBottomRightRadius: 10,
         paddingVertical: 10,
         paddingHorizontal: 12
-      },
-      appButtonText: {
+    },
+    appButtonText: {
         fontSize: 18,
         color: "#fff",
         fontWeight: "bold",
         alignSelf: "center",
         textTransform: "uppercase"
-      }
+    },
+    appButtonRed: {
+        backgroundColor: colors.tintAlert,
+    }
 })

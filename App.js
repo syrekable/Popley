@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { 
+import {
   StyleSheet,
   View,
   ScrollView,
@@ -7,25 +7,25 @@ import {
   Text,
   Alert,
 } from 'react-native';
-import  Plant  from './src/plant';
-import  MockPlants from './src/utils'
+import Plant from './src/plant';
+import MockPlants from './src/utils'
 
-export default class App extends Component { 
-  constructor(props){
+export default class App extends Component {
+  constructor(props) {
     super(props);
     this.plants = this.makeMockupPlants(10, []);
     this.handleClick = this.handleClick.bind(this);
   }
 
-  makeMockupPlants(n, array){
-    for(let i = 0; i < n; i++){
+  makeMockupPlants(n, array) {
+    for (let i = 0; i < n; i++) {
       let data = MockPlants.getPlant();
-      array.push(<Plant key={i} handler={ this.handleClick } name={ data.name } timeToWater={data.time}/>);
+      array.push(<Plant key={i} handler={this.handleClick} name={data.name} timeToWater={data.time} />);
     }
     return array;
   }
-  
-  handleClick(name) { 
+
+  handleClick(name) {
     Alert.alert(
       name,
       "PODLEJ MNIE!!1!",
@@ -34,24 +34,24 @@ export default class App extends Component {
           text: "Podlano!"
         }
       ]);
-  } 
+  }
 
-  render(){
+  render() {
     return (
       <View style={styles.container} >
         <View style={styles.PlantList}>
           <ScrollView>
-            { this.plants }
+            {this.plants}
           </ScrollView>
         </View>
         <TouchableOpacity
-          style={styles.button}
+          style={styles.appButtonContainer}
           onPress={() => Alert.alert("Alert", "Jeszcze nie okodowano /:")}
-          >
-          <Text style={styles.buttonText}>Dodaj roślinkę</Text>
+        >
+          <Text style={styles.appButtonText}>Dodaj roślinkę</Text>
         </TouchableOpacity>
       </View>
-    );  
+    );
   }
 }
 
@@ -60,27 +60,31 @@ const styles = StyleSheet.create({
     flex: 1,
     color: '#979f8e'
   },
-  PlantList: { 
-    flex: 8, 
-    backgroundColor: '#eeeae1', 
+  PlantList: {
+    flex: 8,
+    backgroundColor: '#eeeae1',
     paddingHorizontal: 20,
     marginTop: 30
   },
   bottom: {
-    flex: 1, 
+    flex: 1,
     backgroundColor: '#c4bcb4',
     justifyContent: 'center'
   },
-  button:{
-    backgroundColor: '#87945d',
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center', 
+  appButtonContainer: {
+    elevation: 8,
+    backgroundColor: "#009688",
+    borderRadius: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 12,
+    marginBottom: 10,
+    marginHorizontal: 5
   },
-  buttonText: {
-    textTransform: 'uppercase', 
-    fontWeight: 'bold',
-    fontSize: 30,
-    color: 'black',
-  }
+  appButtonText: {
+    fontSize: 18,
+    color: "#fff",
+    fontWeight: "bold",
+    alignSelf: "center",
+    textTransform: "uppercase"
+  },
 });
