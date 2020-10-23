@@ -21,7 +21,7 @@ class MainScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      plants: this.makeMockupPlantsData(10, []),
+      plants: [],
     }
   }
 
@@ -30,6 +30,8 @@ class MainScreen extends Component {
       let data = Utils.MockPlants.getPlantData();
       array.push({ name: data.name, timeToWater: data.time});
     }
+    console.log(`typeof([]) is ${typeof(new Array())}`)
+    console.log(`making mock of type ${typeof(array)}`)
     return array;
   }
 
@@ -45,16 +47,10 @@ class MainScreen extends Component {
   }
 
   makePlant(name, wateringInterval, image) {
-    const oldPlants = this.state.plants.slice();
-    console.log(oldPlants);
     this.setState({
-      plants: oldPlants.push(
-        {
-          name: { name },
-          timeToWater: Utils.timeToSeconds(wateringInterval),
-        })
+      plants: [...this.state.plants, {name: name, timeToWater: Utils.timeToSeconds(wateringInterval)}],
     })
-    console.log(`this.state: ${JSON.stringify(this.state)}`)
+    console.log(`this.state: ${JSON.stringify(this.state)}\ntypeof(this.state.plants): ${typeof(this.state.plants)}`)
   }
 
 
@@ -63,7 +59,7 @@ class MainScreen extends Component {
       <View style={styles.container} >
         <View style={styles.plantList}>
           <ScrollView>
-            {this.state.plants.map(data => (
+            {this.state.plants && this.state.plants.map(data => (
               <Plant key={`${data.name}_${data.timeToWater}`}
                 name={data.name}
                 timeToWater={data.timeToWater}
