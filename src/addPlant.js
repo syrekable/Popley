@@ -5,11 +5,11 @@ import {
     TouchableOpacity,
     Text,
     TextInput,
-    Alert
+    Alert,
+    Image
 } from 'react-native';
 import { Picker } from '@react-native-community/picker';
 import * as ImagePicker from 'expo-image-picker';
-import Constants from 'expo-constants';
 
 export default class AddPlantScreen extends Component {
     constructor(props) {
@@ -36,32 +36,32 @@ export default class AddPlantScreen extends Component {
 
     useEffect() {
         (async () => {
-          if (Platform.OS !== 'web') {
-            const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
-            if (status !== 'granted') {
-              Alert.alert('Brak dostępu','Wybacz, ale bez Twojej zgody nie możemy wybrać zdjęcia Twojej roślinki 😉');
+            if (Platform.OS !== 'web') {
+                const { status } = await ImagePicker.requestCameraRollPermissionsAsync();
+                if (status !== 'granted') {
+                    Alert.alert('Brak dostępu', 'Wybacz, ale bez Twojej zgody nie możemy wybrać zdjęcia Twojej roślinki 😉');
+                }
             }
-          }
         })();
-      };
-    
+    };
+
     pickImage = async () => {
         //set the 'image' state variable to whatever 
         //the user chooses, if he chooses, whenever he chooses
         let result = await ImagePicker.launchImageLibraryAsync({
-          mediaTypes: ImagePicker.MediaTypeOptions.All,
-          allowsEditing: true,
-          aspect: [4, 3],
-          quality: 1,
+            mediaTypes: ImagePicker.MediaTypeOptions.All,
+            allowsEditing: true,
+            aspect: [4, 3],
+            quality: 1,
         });
-    
+
         console.log(result);
-    
+
         if (!result.cancelled) {
-          this.setState({image: result.uri});
+            this.setState({ image: result.uri });
         }
-      };
-    
+    };
+
 
     //TODO: refactor him some more
     render() {
@@ -93,11 +93,12 @@ export default class AddPlantScreen extends Component {
                             <Picker.Item label="miesiące" value="months" />
                         </Picker>
                     </View>
+                    {this.state.image && <Image source={{uri: this.state.image}} style={{ width: 320, height: 200}}/>}
                     <TouchableOpacity
-                            style={[styles.appButtonContainer, , {marginTop: 30}]}
-                            onPress={this.pickImage}>
-                            <Text style={styles.appButtonText}>Zrób mi zdjęcie!</Text>
-                        </TouchableOpacity>
+                        style={[styles.appButtonContainer, , { marginTop: 30 }]}
+                        onPress={this.pickImage}>
+                        <Text style={styles.appButtonText}>Zrób mi zdjęcie!</Text>
+                    </TouchableOpacity>
                 </View>
                 <TouchableOpacity
                     style={styles.appButtonContainer}
