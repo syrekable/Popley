@@ -7,6 +7,7 @@ import {
     TextInput
 } from 'react-native';
 import { Picker } from '@react-native-community/picker';
+import ImagePicker from 'react-native-image-picker';
 
 export default class AddPlantScreen extends Component {
     constructor(props) {
@@ -29,6 +30,15 @@ export default class AddPlantScreen extends Component {
             quantity: text.replace(/[^0-9]/g, ''),
         });
     }
+
+    options = {
+        title: 'Select Avatar',
+        customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+        storageOptions: {
+            skipBackup: true,
+            path: 'images',
+        },
+    };
 
     //TODO: refactor him some more
     render() {
@@ -59,6 +69,30 @@ export default class AddPlantScreen extends Component {
                             <Picker.Item label="tygodnie" value="weeks" />
                             <Picker.Item label="miesiące" value="months" />
                         </Picker>
+                        <TouchableOpacity
+                            style={styles.appButtonContainer}
+                            onPress={() => ImagePicker.launchCamera(this.options, (response) => {
+                                console.log('Response = ', response);
+
+                                if (response.didCancel) {
+                                    console.log('User cancelled image picker');
+                                } else if (response.error) {
+                                    console.log('ImagePicker Error: ', response.error);
+                                } else if (response.customButton) {
+                                    console.log('User tapped custom button: ', response.customButton);
+                                } else {
+                                    const source = { uri: response.uri };
+
+                                    // You can also display the image using data:
+                                    // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+                                    this.setState({
+                                        avatarSource: source,
+                                    });
+                                }
+                            })}>
+                            <Text style={styles.appButtonText}>Dodaj mnie!</Text>
+                        </TouchableOpacity>
                     </View>
                 </View>
                 <TouchableOpacity
