@@ -17,7 +17,7 @@ export default class AddPlantScreen extends Component {
         this.state = {
             text: "nowa roślinka",
             quantity: 1,
-            interval: "days",
+            interval: "day",
             image: null,
         }
         this.imageOptions = {
@@ -40,6 +40,11 @@ export default class AddPlantScreen extends Component {
         });
     }
 
+    handleClick(name, wateringInterval, image) {
+        //TODO: validate the parameters
+        this.props.route.params.handler(name, wateringInterval, image);
+    }
+
     //two basically the same methods:
     //one lets you choose image, the other make one 
     pickImage = async () => {
@@ -47,7 +52,7 @@ export default class AddPlantScreen extends Component {
         //the user chooses, if he chooses, whenever he chooses
         let result = await ImagePicker.launchImageLibraryAsync(this.imageOptions);
 
-        console.log(result);
+        //console.log(result);
 
         if (!result.cancelled) {
             this.setState({ image: result.uri });
@@ -57,7 +62,7 @@ export default class AddPlantScreen extends Component {
     makePhoto = async () => {
         let result = await ImagePicker.launchCameraAsync(this.imageOptions);
 
-        console.log(result);
+        //console.log(result);
 
         if (!result.cancelled) {
             this.setState({ image: result.uri });
@@ -82,7 +87,7 @@ export default class AddPlantScreen extends Component {
                     <Text style={styles.label}>Nazwa:</Text>
                     <TextInput
                         style={[styles.textInput, { height: 50 }]}
-                        onChangeText={newText => this.setState({ text: newText.trim() })}
+                        onChangeText={newText => this.setState({ text: newText })}
                         onFocus={() => this.clearText()}
                         value={this.state.text} />
                     <Text style={styles.label}>Częstotliwość podlewania:</Text>
@@ -99,9 +104,9 @@ export default class AddPlantScreen extends Component {
                             onValueChange={itemValue =>
                                 this.setState({ interval: itemValue })
                             }>
-                            <Picker.Item label="dnie" value="days" />
-                            <Picker.Item label="tygodnie" value="weeks" />
-                            <Picker.Item label="miesiące" value="months" />
+                            <Picker.Item label="dnie" value="day" />
+                            <Picker.Item label="tygodnie" value="week" />
+                            <Picker.Item label="miesiące" value="month" />
                         </Picker>
                     </View>
                     {this.state.image && <Image source={{ uri: this.state.image }} style={[styles.imageBorder, { marginTop: 20, width: 320, height: 200 }]} />}
@@ -112,8 +117,19 @@ export default class AddPlantScreen extends Component {
                     </TouchableOpacity>
                 </View>
                 <TouchableOpacity
+                //onPress -> trigger MainScreen.makePlant method with given parameters, then go back to main window
                     style={styles.appButtonContainer}
-                    onPress={() => this.props.navigation.goBack()}>
+                    onPress={() => (
+                        this.handleClick(
+                            this.state.text.trim(),
+                            {
+                                quantity: this.state.quantity,
+                                interval: this.state.interval
+                            },
+                            this.state.image
+                        ),
+                        this.props.navigation.goBack()
+                    )}>
                     <Text style={styles.appButtonText}>Dodaj mnie!</Text>
                 </TouchableOpacity>
             </View>

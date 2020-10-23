@@ -12,10 +12,9 @@ export default class plant extends Component {
     //rewatch: https://www.youtube.com/watch?v=5Xew--ycx0o
     constructor(props) {
         super(props);
-        this.handleClick = this.handleClick.bind(this);
     }
 
-    handleClick(name) {
+    handleClick = (name) => {
         this.props.handler(name);
     }
 
@@ -34,7 +33,6 @@ export default class plant extends Component {
                         onPress={() => this.handleClick(this.props.name)}
                         disabled={this.props.timeToWater > 0}//disable if there's no need to water
                         style={this.props.timeToWater > 0 ? styles.appButtonContainer : [styles.appButtonContainer, styles.appButtonRed]}
-                        activeOpacity={0.2}
                     >
                         <Text style={styles.appButtonText}>{this.props.timeToWater > 0 ? `Podlej mnie za ${Math.round(this.props.timeToWater / 60)} minut` : "Podlej mnie!"}</Text>
                     </TouchableOpacity>

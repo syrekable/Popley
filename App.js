@@ -12,8 +12,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import AddPlantScreen from './src/addPlant'
 import Plant from './src/plant';
-import MockPlants from './src/utils'
-
+import Utils from './src/utils'
 
 const Stack = createStackNavigator();
 
@@ -21,14 +20,15 @@ class MainScreen extends Component {
 
   constructor(props) {
     super(props);
-    this.plants = this.makeMockupPlants(10, []);
-    this.handleClick = this.handleClick.bind(this);
+    this.state = {
+      plants: this.makeMockupPlants(1, []),
+    }
   }
 
   makeMockupPlants(n, array) {
     for (let i = 0; i < n; i++) {
-      let data = MockPlants.getPlantData();
-      array.push(<Plant key={i} handler={this.handleClick} name={data.name} timeToWater={data.time} />);
+      let data = Utils.MockPlants.getPlantData();
+      array.push(<Plant key={i} handler={(name) => this.handleClick(name)} name={data.name} timeToWater={data.time} />);
     }
     return array;
   }
@@ -44,17 +44,31 @@ class MainScreen extends Component {
       ]);
   }
 
+  makePlant(name, wateringInterval, image) {
+    const oldPlants = this.state.plants.slice();
+    console.log(oldPlants);
+    this.setState({
+      plants: oldPlants.push(
+        <Plant
+          handler={(name) => this.handleClick(name)}
+          name={name}
+          timeToWater={Utils.timeToSeconds(wateringInterval)}
+        />)
+      })
+  }
+
+
   render() {
     return (
       <View style={styles.container} >
         <View style={styles.plantList}>
           <ScrollView>
-            {this.plants}
+            {this.state.plants}
           </ScrollView>
         </View>
         <TouchableOpacity
           style={styles.appButtonContainer}
-          onPress={() => this.props.navigation.navigate('NewPlant')}>
+          onPress={() => this.props.navigation.navigate('NewPlant', { handler: this.makePlant.bind(this) })}>
           <Text style={styles.appButtonText}>Dodaj roślinkę</Text>
         </TouchableOpacity>
       </View>
