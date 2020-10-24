@@ -23,17 +23,17 @@ class MainScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      loaded: false,
       plants: [],
     }
   }
 
   makeMockupPlantsData(n, array) {
+    //create an array of n mock flowers, encoded as {name, timeToWater}
     for (let i = 0; i < n; i++) {
       let data = Utils.MockPlants.getPlantData();
       array.push({ name: data.name, timeToWater: data.time });
     }
-    console.log(`typeof([]) is ${typeof (new Array())}`)
-    console.log(`making mock of type ${typeof (array)}`)
     return array;
   }
 
@@ -49,7 +49,7 @@ class MainScreen extends Component {
   }
 
   makePlant(name, wateringInterval, image) {
-    console.log(`makeplant params :${JSON.stringify({name: name, interval: wateringInterval, img: image})}`);
+    //concat plants stored in state with the new one, then call storeData to store the whole family on device
     this.setState({
       plants: [...this.state.plants, { name: name, timeToWater: Utils.timeToSeconds(wateringInterval), image: image }],
     }, this.storeData)
@@ -61,20 +61,25 @@ class MainScreen extends Component {
       console.log(`STORE jsonValue: ${jsonValue}`)
       await AsyncStorage.setItem(STORAGE_KEY, jsonValue)
     } catch (e) {
-      console.error(`An exception ocurred while storing data: ${e}`);
+      console.error(`An exception ocurred while storing data:\n${e}`);
     }
   }
 
   getData = async () => {
     try {
       const jsonValue = await AsyncStorage.getItem(STORAGE_KEY)
-      console.log(`READ jsonValue: ${jsonValue}`)
-      return jsonValue != null ? JSON.parse(jsonValue) : null;
+      console.log(`READ jsonValue: ${jsonValue}`);
+      //this WILL cause trouble
+      const newState = jsonValue != null ? JSON.parse(jsonValue) : [];
+      this.setState({ plants: newState });
     } catch (e) {
-      console.error(`An exception ocurred while loading data: ${e}`);
+      console.error(`An exception ocurred while loading data:\n${e}`);
     }
   }
 
+  componentDidMount() {
+    this.getData();
+  }
 
   render() {
     return (
