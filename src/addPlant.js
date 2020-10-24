@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as Permissions from 'expo-permissions';
 import {
     StyleSheet,
     View,
@@ -60,6 +61,14 @@ export default class AddPlantScreen extends Component {
     };
 
     makePhoto = async () => {
+
+        let permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+
+        if (permissionResult.granted === false) {
+            alert("Permission to access camera roll is required!");
+            return;
+        }
+
         let result = await ImagePicker.launchCameraAsync(this.imageOptions);
 
         //console.log(result);
@@ -67,7 +76,7 @@ export default class AddPlantScreen extends Component {
         if (!result.cancelled) {
             this.setState({ image: result.uri });
         }
-    }
+    };
 
     //TODO: refactor him some more
     /*
