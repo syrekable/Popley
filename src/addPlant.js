@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import * as Permissions from 'expo-permissions';
 import {
     StyleSheet,
     View,
@@ -33,7 +32,7 @@ export default class AddPlantScreen extends Component {
         this.setState({ text: "" })
     }
 
-    onChanged(text) {
+    onChangedNumericValue(text) {
         //numeric input sanitizer, source:
         //https://stackoverflow.com/a/47751269/12938809
         this.setState({
@@ -46,26 +45,12 @@ export default class AddPlantScreen extends Component {
         this.props.route.params.handler(name, wateringInterval, image);
     }
 
-    //two basically the same methods:
-    //one lets you choose image, the other make one 
-    pickImage = async () => {
-        //set the 'image' state variable to whatever 
-        //the user chooses, if he chooses, whenever he chooses
-        let result = await ImagePicker.launchImageLibraryAsync(this.imageOptions);
-
-        //console.log(result);
-
-        if (!result.cancelled) {
-            this.setState({ image: result.uri });
-        }
-    };
-
     makePhoto = async () => {
 
         let permissionResult = await ImagePicker.requestCameraPermissionsAsync();
 
         if (permissionResult.granted === false) {
-            alert("Permission to access camera roll is required!");
+            Alert.alert("Błąd", "Potrzebujemy Twojego zezwolenia na używanie aparatu. Bez niego nie uda się zrobić zdjęcia Twojej roślinki... 😉", [{ text: "OK!" }]);
             return;
         }
 
@@ -104,7 +89,7 @@ export default class AddPlantScreen extends Component {
                         <TextInput
                             style={[styles.textInput, { flex: 1 }]}
                             keyboardType="numeric"
-                            onChangeText={quantity => this.onChanged(quantity)}
+                            onChangeText={quantity => this.onChangedNumericValue(quantity)}
                             value={this.state.quantity.toString()}
                         />
                         <Picker

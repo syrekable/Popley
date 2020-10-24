@@ -10,11 +10,13 @@ import {
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import AddPlantScreen from './src/addPlant'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AddPlantScreen from './src/addPlant';
 import Plant from './src/plant';
-import Utils from './src/utils'
+import Utils from './src/utils';
 
 const Stack = createStackNavigator();
+const STORAGE_KEY = '@save_plants'
 
 class MainScreen extends Component {
 
@@ -47,11 +49,30 @@ class MainScreen extends Component {
   }
 
   makePlant(name, wateringInterval, image) {
-    console.log(`image.uri: ${image}`);
+    console.log(`makeplant params :${JSON.stringify({name: name, interval: wateringInterval, img: image})}`);
     this.setState({
       plants: [...this.state.plants, { name: name, timeToWater: Utils.timeToSeconds(wateringInterval), image: image }],
-    })
-    console.log(`this.state.plants: ${JSON.stringify(this.state.plants)}\ntypeof(this.state.plants): ${typeof (this.state.plants)}`)
+    }, this.storeData)
+  }
+
+  storeData = async () => {
+    try {
+      const jsonValue = JSON.stringify(this.state.plants)
+      console.log(`STORE jsonValue: ${jsonValue}`)
+      await AsyncStorage.setItem(STORAGE_KEY, jsonValue)
+    } catch (e) {
+      console.error(`An exception ocurred while storing data: ${e}`);
+    }
+  }
+
+  getData = async () => {
+    try {
+      const jsonValue = await AsyncStorage.getItem(STORAGE_KEY)
+      console.log(`READ jsonValue: ${jsonValue}`)
+      return jsonValue != null ? JSON.parse(jsonValue) : null;
+    } catch (e) {
+      console.error(`An exception ocurred while loading data: ${e}`);
+    }
   }
 
 
@@ -71,7 +92,7 @@ class MainScreen extends Component {
         </View>
         <TouchableOpacity
           style={styles.appButtonContainer}
-          onPress={() => this.props.navigation.navigate('NewPlant', { handler: this.makePlant.bind(this) })}>
+          onPress={() => this.props.navigation.navigate('AddPlantScreen', { handler: this.makePlant.bind(this) })}>
           <Text style={styles.appButtonText}>Dodaj roślinkę</Text>
         </TouchableOpacity>
       </View>
@@ -85,7 +106,7 @@ export default class App extends Component {
       <NavigationContainer initialRouteName="HomeScreen">
         <Stack.Navigator>
           <Stack.Screen name="HomeScreen" component={MainScreen} options={{ title: "Twoje roślinki" }} />
-          <Stack.Screen name="NewPlant" component={AddPlantScreen} options={{ title: "Dodaj roślinkę" }} />
+          <Stack.Screen name="AddPlantScreen" component={AddPlantScreen} options={{ title: "Dodaj roślinkę" }} />
         </Stack.Navigator>
       </NavigationContainer>
     )

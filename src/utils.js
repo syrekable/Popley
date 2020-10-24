@@ -15,13 +15,13 @@ class MockPlants {
   }
 }
 
-function timeToSeconds(wateringInterval){
+function timeToSeconds(wateringInterval) {
   //return given interval, expressed as {quantity: int, interval: str} till next watering in seconds
   const exchangeRate = {
-    "day": 24*60*60,
-    "week": 7*24*60*60,
-    "month": 4*7*24*60*60,
-  }; 
+    "day": 24 * 60 * 60,
+    "week": 7 * 24 * 60 * 60,
+    "month": 4 * 7 * 24 * 60 * 60,
+  };
   return wateringInterval.quantity * exchangeRate[wateringInterval.interval];
 }
 
