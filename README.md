@@ -1,4 +1,3 @@
 # TODO:
-  - move *styles* of each module to a separate file, merge them into one Stylesheet so that every module imports them
-  - utility that calculates the time between now and another watering
-    * fire it up once every time t and on load 
+  Change this bad boy, so that the global state is governed by Redux.
+  *\*sighs\**
