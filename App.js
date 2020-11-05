@@ -66,10 +66,10 @@ class MainScreen extends Component {
   }
 
   getData = async () => {
+    //set the state.plants to stored plants or to an empty array 
     try {
       const jsonValue = await AsyncStorage.getItem(STORAGE_KEY)
       console.log(`READ jsonValue: ${jsonValue}`);
-      //this WILL cause trouble
       const newState = jsonValue != null ? JSON.parse(jsonValue) : [];
       this.setState({ plants: newState });
     } catch (e) {
