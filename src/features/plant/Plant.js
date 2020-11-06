@@ -10,21 +10,24 @@ export default class plant extends Component {
         const color = this.props.timeToWater > 0 ? colors.tintNormal : colors.tintAlert;
         return (
             <View style={styles.container}>
-                <ImageBackground
-                    source={{ uri: this.props.image }}
-                    style={styles.plantImg}
-                >
-                    <Tint color={color} name={this.props.name} />
-                </ImageBackground>
-                <View>
-                    <TouchableOpacity
-                        onPress={() => console.log(`${this.props.name} clicked`)}
-                        disabled={this.props.timeToWater > 0}//disable if there's no need to water
-                        style={this.props.timeToWater > 0 ? styles.appButtonContainer : [styles.appButtonContainer, styles.appButtonRed]}
+                <TouchableOpacity onLongPress={() => console.log(`TODO: dispatch 'edit' action for ${this.props.name}, 'cause longpress WORKS!!1!`)}>
+                    <ImageBackground
+                        source={{ uri: this.props.image }}
+                        style={styles.plantImg}
                     >
-                        <Text style={styles.appButtonText}>{this.props.timeToWater > 0 ? `Podlej mnie za ${Math.round(this.props.timeToWater / 60 / 24 )} godzin` : "Podlej mnie!"}</Text>
-                    </TouchableOpacity>
-                </View>
+                        <Tint color={color} name={this.props.name} />
+                    </ImageBackground>
+                    <View>
+                        <TouchableOpacity
+                            onPress={() => console.log(`${this.props.name} clicked`)}
+                            disabled={this.props.timeToWater > 0}//disable if there's no need to water
+                            style={this.props.timeToWater > 0 ? styles.appButtonContainer : [styles.appButtonContainer, styles.appButtonRed]}
+                        >
+                            <Text style={styles.appButtonText}>{this.props.timeToWater > 0 ? `Podlej mnie za ${Math.round(this.props.timeToWater / 60 / 24)} godzin` : "Podlej mnie!"}</Text>
+                        </TouchableOpacity>
+                    </View>
+                </TouchableOpacity>
+
             </View>
         );
     }
