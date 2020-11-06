@@ -8,12 +8,12 @@ import {
   Text,
   Alert,
 } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import AddPlantScreen from './src/addPlant';
 import Plant from './src/plant';
 import Utils from './src/utils';
+import { Provider } from "react-redux";
+import store from "./store";
 
 const Stack = createStackNavigator();
 const STORAGE_KEY = '@save_plants'
@@ -108,12 +108,14 @@ class MainScreen extends Component {
 export default class App extends Component {
   render() {
     return (
-      <NavigationContainer initialRouteName="HomeScreen">
-        <Stack.Navigator>
-          <Stack.Screen name="HomeScreen" component={MainScreen} options={{ title: "Twoje roślinki" }} />
-          <Stack.Screen name="AddPlantScreen" component={AddPlantScreen} options={{ title: "Dodaj roślinkę" }} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <Provider store={store}>
+        <NavigationContainer initialRouteName="HomeScreen">
+          <Stack.Navigator>
+            <Stack.Screen name="HomeScreen" component={MainScreen} options={{ title: "Twoje roślinki" }} />
+            <Stack.Screen name="AddPlantScreen" component={AddPlantScreen} options={{ title: "Dodaj roślinkę" }} />
+          </Stack.Navigator>
+        </NavigationContainer>  
+      </Provider>
     )
   }
 }
