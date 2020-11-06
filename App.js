@@ -11,11 +11,10 @@ const Stack = createStackNavigator();
 
 export default class App extends Component {
   render() {
-    console.log(store.getState())
     return (
       <NavigationContainer store={store} initialRouteName="HomeScreen">
         <Stack.Navigator>
-          <Stack.Screen name="HomeScreen" component={MainScreen} options={{ title: "Twoje roślinki" }} />
+          <Stack.Screen name="MainScreen" component={MainScreen} options={{ title: "Twoje roślinki" }} />
           <Stack.Screen name="AddPlantScreen" component={AddPlantScreen} options={{ title: "Dodaj roślinkę" }} />
         </Stack.Navigator>
       </NavigationContainer>

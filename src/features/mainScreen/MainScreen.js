@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { createStackNavigator } from '@react-navigation/stack';
 import {
   View,
   ScrollView,
@@ -79,7 +80,7 @@ export default class MainScreen extends Component {
         </View>
         <TouchableOpacity
           style={styles.appButtonContainer}
-          onPress={() => console.log('Button pressed')}>
+          onPress={() => this.props.navigation.navigate("AddPlantScreen")}>
           <Text style={styles.appButtonText}>Dodaj roślinkę</Text>
         </TouchableOpacity>
       </View>
