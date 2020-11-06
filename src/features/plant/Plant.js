@@ -22,7 +22,7 @@ export default class plant extends Component {
                         disabled={this.props.timeToWater > 0}//disable if there's no need to water
                         style={this.props.timeToWater > 0 ? styles.appButtonContainer : [styles.appButtonContainer, styles.appButtonRed]}
                     >
-                        <Text style={styles.appButtonText}>{this.props.timeToWater > 0 ? `Podlej mnie za ${Math.round(this.props.timeToWater / 60 / 24 / 24)} dni` : "Podlej mnie!"}</Text>
+                        <Text style={styles.appButtonText}>{this.props.timeToWater > 0 ? `Podlej mnie za ${Math.round(this.props.timeToWater / 60 / 24 )} godzin` : "Podlej mnie!"}</Text>
                     </TouchableOpacity>
                 </View>
             </View>

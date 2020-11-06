@@ -32,13 +32,6 @@ export default class MainScreen extends Component {
     return array;
   }
 
-  makePlant(name, wateringInterval, image) {
-    //concat plants stored in state with the new one, then call storeData to store the whole family on device
-    this.setState({
-      plants: [...this.state.plants, { name: name, timeToWater: Utils.timeToSeconds(wateringInterval), image: image }],
-    }, this.storeData)
-  }
-
   storeData = async () => {
     try {
       const jsonValue = JSON.stringify(this.state.plants)
@@ -62,7 +55,7 @@ export default class MainScreen extends Component {
   }
 
   componentDidMount() {
-    this.getData();
+    this.setState({plants: this.makeMockupPlantsData(10, [])});
   }
 
   render() {
