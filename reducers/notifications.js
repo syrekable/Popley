@@ -20,5 +20,7 @@ export default function notificatons(state = initialState, action) {
         notificatonsForPlants: state.notificatonsForPlants.filter(plant => plant.id !== action.payload.id)
       }
     }
+    default: 
+      return initialState
   }
 }
