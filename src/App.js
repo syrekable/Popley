@@ -9,12 +9,12 @@ import {
   Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import AddPlantScreen from './src/addPlant';
-import Plant from './src/plant';
-import Utils from './src/utils';
+import AddPlantScreen from './features/addPlant/addPlant';
+import Plant from './features/plants/Plant';
+import Utils from './utils';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import store from "./store";
+import store from "./app/store";
 
 const Stack = createStackNavigator();
 const STORAGE_KEY = '@save_plants';

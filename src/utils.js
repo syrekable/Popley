@@ -15,17 +15,17 @@ class MockPlants {
   }
 }
 
-function timeToSeconds(wateringInterval) {
+function timeToSeconds({quantity, interval}) {
   //return given interval, expressed as {quantity: int, interval: str} till next watering in seconds
   const exchangeRate = {
     "day": 24 * 60 * 60,
     "week": 7 * 24 * 60 * 60,
     "month": 4 * 7 * 24 * 60 * 60,
   };
-  return wateringInterval.quantity * exchangeRate[wateringInterval.interval];
+  return quantity * exchangeRate[interval];
 }
 
 MockPlants.intervals = [0, 15, 30, 45, 60, 120, 300, 600, 3600];
 MockPlants.names = ["mandragora", "kuktas", "cukinia", "magnolia", "konopia", "orichidea", "burak", "trzcina cukrowa"];
 
-export default { MockPlants, timeToSeconds }
+export { MockPlants, timeToSeconds }
