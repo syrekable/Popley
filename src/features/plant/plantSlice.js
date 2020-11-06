@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit'
-import { timeToSeconds } from '../../utils'
+import { timeToSeconds } from '../../app/utils'
 
 export const plantSlice = createSlice({
   name: 'plant',
@@ -11,7 +11,7 @@ export const plantSlice = createSlice({
       interval: 'week'
     },
     timeToWater: 0,
-    imgSource: ''
+    image: ''
   },
   reducers: {
     add: (state, action) => {

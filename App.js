@@ -9,12 +9,12 @@ import {
   Alert,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import AddPlantScreen from './features/addPlant/addPlant';
-import Plant from './features/plants/Plant';
-import Utils from './utils';
+import AddPlantScreen from './src/features/addPlant/addPlant';
+import Plant from './src/features/plant/Plant';
+import Utils from './src/app/utils';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
-import store from "./app/store";
+import store from "./src/app/store";
 
 const Stack = createStackNavigator();
 const STORAGE_KEY = '@save_plants';
@@ -92,13 +92,12 @@ class MainScreen extends Component {
                 name={data.name}
                 timeToWater={data.timeToWater}
                 image={data.image}
-                handler={() => this.handleClick(data.name)}
               />))}
           </ScrollView>
         </View>
         <TouchableOpacity
           style={styles.appButtonContainer}
-          onPress={() => this.props.navigation.navigate('AddPlantScreen', { handler: this.makePlant.bind(this) })}>
+          onPress={() => console.log('Button pressed')}>
           <Text style={styles.appButtonText}>Dodaj roślinkę</Text>
         </TouchableOpacity>
       </View>

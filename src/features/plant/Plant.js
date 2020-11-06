@@ -6,18 +6,6 @@ export default class plant extends Component {
     //and a button, showing either the time to next watering
     //or alerting the user to water the plant
 
-    //I have absolutely no idea what is going on here, 
-    //but got it roughly from there
-    //reread: https://reactjs.org/docs/lifting-state-up.html
-    //rewatch: https://www.youtube.com/watch?v=5Xew--ycx0o
-    constructor(props) {
-        super(props);
-    }
-
-    handleClick = (name) => {
-        this.props.handler(name);
-    }
-
     render() {
         const color = this.props.timeToWater > 0 ? colors.tintNormal : colors.tintAlert;
         return (
@@ -30,11 +18,11 @@ export default class plant extends Component {
                 </ImageBackground>
                 <View>
                     <TouchableOpacity
-                        onPress={() => this.handleClick(this.props.name)}
+                        onPress={() => console.log(`${this.props.name} clicked`)}
                         disabled={this.props.timeToWater > 0}//disable if there's no need to water
                         style={this.props.timeToWater > 0 ? styles.appButtonContainer : [styles.appButtonContainer, styles.appButtonRed]}
                     >
-                        <Text style={styles.appButtonText}>{this.props.timeToWater > 0 ? `Podlej mnie za ${Math.round(this.props.timeToWater / 60)} minut` : "Podlej mnie!"}</Text>
+                        <Text style={styles.appButtonText}>{this.props.timeToWater > 0 ? `Podlej mnie za ${Math.round(this.props.timeToWater / 60 / 24 / 24)} dni` : "Podlej mnie!"}</Text>
                     </TouchableOpacity>
                 </View>
             </View>
@@ -47,7 +35,7 @@ class Tint extends Component {
     render() {
         return (
             <ImageBackground
-                source={require("../assets/icon.png")}//any image will do, but icon is small -> light
+                source={require("../../../assets/icon.png")}//any image will do, but icon is small -> light
                 style={[styles.plantImg, styles.transparent]}
                 tintColor={this.props.color}
             >

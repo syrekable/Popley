@@ -42,7 +42,8 @@ export default class AddPlantScreen extends Component {
 
     handleClick(name, wateringInterval, image) {
         //TODO: validate the parameters
-        this.props.route.params.handler(name, wateringInterval, image);
+        //this.props.route.params.handler(name, wateringInterval, image);
+        console.log(`Button in addPlant clicked`)
     }
 
     makePhoto = async () => {
