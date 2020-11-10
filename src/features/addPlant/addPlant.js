@@ -10,8 +10,10 @@ import {
 } from 'react-native';
 import { Picker } from '@react-native-community/picker';
 import * as ImagePicker from 'expo-image-picker';
+import { connect, useDispatch } from 'react-redux';
+import { add } from '../plant/plantSlice';
 
-export default class AddPlantScreen extends Component {
+export class AddPlantScreen extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -115,13 +117,16 @@ export default class AddPlantScreen extends Component {
                     //onPress -> trigger MainScreen.makePlant method with given parameters, then go back to main window
                     style={styles.appButtonContainer}
                     onPress={() => (
-                        this.handleClick(
-                            this.state.text.trim(),
-                            {
+                        this.props.add({
+                            name: this.state.text.trim(),
+                            wateringInterval: {
                                 quantity: this.state.quantity,
                                 interval: this.state.interval
                             },
-                            this.state.image
+                            image: this.state.image
+                        }),
+                        this.handleClick(
+                            
                         ),
                         this.props.navigation.goBack()
                     )}>
@@ -131,6 +136,13 @@ export default class AddPlantScreen extends Component {
         )
     }
 }
+
+const mapDispatchToProps = dispatch => {
+    return {
+      // dispatching plain actions
+      add: (payload) => dispatch(add(payload)),
+    }
+  }
 
 const styles = StyleSheet.create({
     container: {
@@ -173,3 +185,5 @@ const styles = StyleSheet.create({
         textTransform: "uppercase"
     },
 });
+
+export default connect(null, mapDispatchToProps)(AddPlantScreen);
