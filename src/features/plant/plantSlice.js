@@ -3,16 +3,28 @@ import { timeToSeconds } from '../../app/utils'
 
 export const plantSlice = createSlice({
   name: 'plant',
-  initialState: {
-    id: '',
-    name: '',
-    wateringInterval: {
-      quantity: 1,
-      interval: 'week'
+  initialState: [
+    {
+      id: '',
+      name: 'Monstera',
+      wateringInterval: {
+        quantity: 1,
+        interval: 'week'
+      },
+      timeToWater: 21374,
+      image: 'https://bi.im-g.pl/im/70/b4/18/z25907056V,Kwiat-monstera-w-optymalnych-warunkach-osiaga-200-.jpg'
     },
-    timeToWater: 0,
-    image: ''
-  },
+    {
+      id: '',
+      name: 'Burak',
+      wateringInterval: {
+        quantity: 3,
+        interval: 'day'
+      },
+      timeToWater: 0,
+      image: 'https://naturapluszdrowie.pl/wp-content/uploads/2017/05/Fotolia_117232374_Subscription_Monthly_M.jpg'
+    },
+  ],
   reducers: {
     add: (state, action) => {
       const plant = action.payload
@@ -39,6 +51,6 @@ export const plantSlice = createSlice({
   }
 })
 
-export const {add, edit, remove, water} = plantSlice.actions
+export const { add, edit, remove, water } = plantSlice.actions
 
 export default plantSlice.reducer
